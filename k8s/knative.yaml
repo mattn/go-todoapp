@@ -1,0 +1,23 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: go-todoapp
+spec:
+  template:
+    metadata:
+      labels:
+        app: go-todoapp
+    spec:
+      containers:
+      - name: go-todoapp
+        image: ghcr.io/mattn/go-todoapp
+        imagePullPolicy: Always
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: todoapp
+              key: database-url
+        ports:
+        - containerPort: 8989
+          protocol: TCP
