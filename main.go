@@ -87,7 +87,7 @@ func main() {
 	})
 
 	e.GET("/tasks", func(c echo.Context) error {
-		var tasks []Task
+		tasks := []Task{}
 		err := bundb.NewSelect().Model((*Task)(nil)).Order("id").Scan(context.Background(), &tasks)
 		if err != nil {
 			e.Logger.Error(err)
